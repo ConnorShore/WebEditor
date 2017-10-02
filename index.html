@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Web Editor</title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="js/w2ui-1.5.rc1.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="js/w2ui-1.5.rc1.css" />
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+
+</head>
+
+<body>
+    <div class="page-content" id="page-content"></div>
+</body>
+
+<script>
+
+var pstyle = 'border: 1px solid #FF5D12; padding: 5px; background-color: #111111;';
+
+var config = {
+    layout: {
+        name: 'layout',
+        padding: 0,
+        style: "pstyle",
+        panels: [
+            { type: 'top', size: 50, resizable: false, style: pstyle},
+            { type: 'left', size: 200, resizable: true, minSize: 120, style: pstyle},
+            { type: 'right', size: 200, resizable: true, minSize: 120, style: pstyle},
+            { type: 'main', overflow: 'hidden', 
+                style: pstyle,
+                tabs: {
+                    active: 'tab0',
+                    tabs: [{ id: 'tab0', caption: 'Initial Tab', style: pstyle + "color: white" }],
+                    onClick: function (event) {
+                        w2ui.layout.html('main', 'Active tab: '+ event.target);
+                    },
+                    onClose: function (event) {
+                        this.click('tab0');
+                    }
+                }
+            }
+        ]
+    },
+    sidebar: {
+        name: 'sidebar',
+        style: pstyle,
+        nodes: [ 
+            { id: 'general', text: 'General', style: pstyle, group: true, expanded: true, nodes: [
+                { id: 'item1', text: 'Item 1', img: 'icon-page' },
+                { id: 'item2', text: 'Item 2', img: 'icon-page' },
+                { id: 'item3', text: 'Item 3', img: 'icon-page' },
+                { id: 'item4', text: 'Item 4', img: 'icon-page' }
+            ]}
+        ],
+        onClick: function (event) {
+            var tabs = w2ui.layout_main_tabs;
+            if (tabs.get(event.target)) {
+                tabs.select(event.target);
+                w2ui.layout.html('main', 'Tab Selected');
+            } else {
+                tabs.add({ id: event.target, caption: 'Tab '+ event.target, closable: true });
+                w2ui.layout.html('main', 'New tab added');
+            }
+        }
+    }
+};
+
+$(function() {
+    $("#page-content").w2layout(config.layout);
+    w2ui.layout.content('left', $().w2sidebar(config.sidebar));
+});
+
+</script>
+
+</html>

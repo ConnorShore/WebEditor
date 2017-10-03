@@ -2632,7 +2632,7 @@ button.w2ui-btn-small:focus:before {
   width: 100%;
 }
 .w2ui-sidebar .w2ui-sidebar-div .w2ui-node {
-  background-color: #edf1f6;
+  background-color: #252A35;
   border-top: 1px solid transparent;
   border-bottom: 1px solid transparent;
   margin: 0px;
@@ -2645,7 +2645,7 @@ button.w2ui-btn-small:focus:before {
 .w2ui-sidebar .w2ui-sidebar-div .w2ui-node .w2ui-node-image,
 .w2ui-sidebar .w2ui-sidebar-div .w2ui-node .w2ui-node-image > span,
 .w2ui-sidebar .w2ui-sidebar-div .w2ui-node td.w2ui-node-dots {
-  color: #000000;
+  color: #FFFBF7;
   text-shadow: 0px 0px 0px #ffffff;
   pointer-events: none;
 }
@@ -2840,8 +2840,8 @@ button.w2ui-btn-small:focus:before {
   text-align: center;
   color: #FFFBF7;
   background-color: #21252C;
-  border: 1px solid white;
-  border-bottom: 2px solid white;
+  border: 1px solid #941B0C;
+  border-bottom: 2px solid #941B0C;
   white-space: nowrap;
   margin: 1px 1px -1px 0px;
   border-top-left-radius: 4px;
@@ -2856,8 +2856,8 @@ button.w2ui-btn-small:focus:before {
 .w2ui-tabs .w2ui-tab.active {
   color: #FFFBF7;
   background-color: #131010;
-  border: 1px solid white;
-  border-bottom: 2px solid white;
+  border: 1px solid #941B0C;
+  border-bottom: 2px solid #131010;
 }
 .w2ui-tabs .w2ui-tab.closable {
   padding: 6px 28px 6px 20px;

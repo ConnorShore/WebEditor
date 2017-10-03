@@ -18,62 +18,83 @@
 </body>
 
 <script>
+    var pstyle = 'padding: 5px;';
+    var borderStyle = 'border-color: #941B0C; border-width: 1px; border-style: solid;';
 
-var pstyle = 'padding: 5px;';
-var borderStyle = 'border-color: #941B0C; border-width: 1px; border-style: solid;';
-
-var config = {
-    layout: {
-        name: 'layout',
-        style: borderStyle,
-        padding: 0,
-        panels: [
-            { type: 'left', size: 200, resizable: true, minSize: 120, style: pstyle},
-            { type: 'right', size: 200, resizable: true, minSize: 120, style: pstyle + 'background-color:#252A35'},
-            { type: 'main', overflow: 'hidden', 
-                //PUT IN SPLIT SCREEN LAYOUT INSIDE OF MAIN//
-                style: pstyle + 'background-color:#131010; ',
-                tabs: {
-                    active: 'tab0',
-                    tabs: [{ id: 'tab0', caption: 'Initial Tab', style: borderStyle + 'border-bottom: 1px solid #131010'}],
-                    onClick: function (event) {
-                        w2ui.layout.html('main', 'Active tab: '+ event.target);
-                    },
-                    onClose: function (event) {
-                        this.click('tab0');
-                    }
+    var config = {
+        layout: {
+            name: 'layout',
+            style: borderStyle,
+            padding: 0,
+            panels: [
+                { type: 'left', size: 200, resizable: true, minSize: 120, style: pstyle },
+                { type: 'right', size: 200, resizable: true, minSize: 120, style: pstyle + 'background-color:#252A35' },
+                {
+                    type: 'main', overflow: 'hidden',
+                    //PUT IN SPLIT SCREEN LAYOUT INSIDE OF MAIN//
+                    style: pstyle + 'background-color:#131010; '
+                }
+            ]
+        },
+        sidebar: {
+            name: 'sidebar',
+            style: pstyle,
+            nodes: [
+                {
+                    id: 'general', text: 'General', style: pstyle, group: true, expanded: true, nodes: [
+                        { id: 'item1', text: 'Item 1', img: 'icon-page' },
+                        { id: 'item2', text: 'Item 2', img: 'icon-page' },
+                        { id: 'item3', text: 'Item 3', img: 'icon-page' },
+                        { id: 'item4', text: 'Item 4', img: 'icon-page' }
+                    ]
+                }
+            ],
+            onClick: function (event) {
+                var tabs = w2ui.layout_main_tabs;
+                if (tabs.get(event.target)) {
+                    tabs.select(event.target);
+                    tabs.active(event.target);
+                    w2ui.layout.html('main', 'editor.html');
+                } else {
+                    tabs.add({ id: event.target, caption: 'Tab ' + event.target, closable: true });
+                    tabs.select(event.target);
+                    tabs.active(event.target);
+                    w2ui.layout.html('main', 'editor.html');
                 }
             }
-        ]
-    },
-    sidebar: {
-        name: 'sidebar',
-        style: pstyle,
-        nodes: [ 
-            { id: 'general', text: 'General', style: pstyle, group: true, expanded: true, nodes: [
-                { id: 'item1', text: 'Item 1', img: 'icon-page' },
-                { id: 'item2', text: 'Item 2', img: 'icon-page' },
-                { id: 'item3', text: 'Item 3', img: 'icon-page' },
-                { id: 'item4', text: 'Item 4', img: 'icon-page' }
-            ]}
-        ],
-        onClick: function (event) {
-            var tabs = w2ui.layout_main_tabs;
-            if (tabs.get(event.target)) {
-                tabs.select(event.target);
-                w2ui.layout.html('main', 'Tab Selected');
-            } else {
-                tabs.add({ id: event.target, caption: 'Tab '+ event.target, closable: true });
-                w2ui.layout.html('main', 'New tab added');
-            }
-        }
-    }
-};
+        },
+        textarea: {
+            name: 'textarea',
+            style: pstyle + 'background-color:#131010; ',
+            panels: [
+                {
+                    type: 'main', overflow: 'hidden',
+                    //PUT IN SPLIT SCREEN LAYOUT INSIDE OF MAIN//
+                    style: pstyle + 'background-color:#131010; ',
+                    tabs: {
+                        tabs: [
+                            { id: 'welcome', caption: 'Welcome', closable: true, }
+                        ],
+                        active: 'welcome',
+                        selected: 'welcome',
+                        onClick: function (event) {
+                            w2ui.layout.html('main', 'Active tab: ' + event.target);
+                        }
+                    }
+                },
+                {
+                    type: 'right', size: 750, resizable: true, minSize: 250, style: pstyle + 'border-left: 1px solid #941B0C; background-color:#131010; '
+                }
+            ]
 
-$(function() {
-    $("#page-content").w2layout(config.layout);
-    w2ui.layout.content('left', $().w2sidebar(config.sidebar));
-});
+        }
+    };
+
+    $(function () {
+        $("#page-content").w2layout(config.layout);
+        w2ui.layout.content('left', $().w2sidebar(config.sidebar));
+        w2ui.layout.content('main', $().w2layout(config.textarea));
+    });
 
 </script>
 
